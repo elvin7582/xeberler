@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #esasHisse {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+      .output {
+        width: 250px;
+        border: 2px solid gray;
+        padding: 10px;
+        overflow: hidden;
+        font-size: 16px;
+      }
+
+      .output img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>XEBERLER</h1>
+    <div id="esasHisse"></div>
+    <script>
+      fetch(
+        "https://newsapi.org/v2/top-headlines?country=us&apiKey=0bdcaea06aab4e20b6fa05775aeca7cc"
+      )
+        .then((x) => x.json())
+        .then((data) => {
+          console.log(data.articles);
+          data.articles.map((item) => {
+            let esasHisse = document.getElementById("esasHisse");
+            let structure = document.createElement("div");
+            structure.innerHTML = `
+              <h4>${item.title.slice(0, 20)}</h4>
+              <b>${item.description}</b>
+              <p>${item.content}</p>
+              <img src="${item.urlToImage}" />
+          `;
+            structure.classList.add("output");
+            esasHisse.appendChild(structure);
+          });
+        });
+    </script>
+  </body>
+</html>
